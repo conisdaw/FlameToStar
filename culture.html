@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园文化 - 大庆师范学院</title>
+    <style>
+        :root {
+            --primary-color: #1e4c9a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #1e4c9a, #00bfff);
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .culture-section {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+
+        .culture-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .culture-card h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .activity-item {
+            background: #87CEEB;
+            padding: 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .activity-item:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .activity-item h3 {
+            color: #1e4c9a;
+            margin-top: 0;
+            animation: titleGlow 2s infinite;
+        }
+
+        .activity-images {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            animation: expandImages 0.5s ease-out;
+        }
+
+        .activity-images img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-images img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .activity-item.expanded {
+            background: #B0E2FF;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: scale(1.02);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .activity-item.expanded .activity-images {
+            display: grid;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 5px;
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .close-button:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .prev {
+            left: 30px;
+        }
+
+        .next {
+            right: 30px;
+        }
+
+        .activity-item p {
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        /* 卡片悬浮动画 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        /* 图片展开动画 */
+        @keyframes expandImages {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        /* 标题发光动画 */
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 0 0 5px rgba(30, 76, 154, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 15px rgba(30, 76, 154, 0.5);
+            }
+        }
+
+        /* 应用动画到元素 */
+        .activity-item {
+            animation: float 3s ease-in-out infinite;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .activity-item:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .activity-item h3 {
+            animation: titleGlow 2s infinite;
+        }
+
+        .activity-images {
+            animation: expandImages 0.5s ease-out;
+        }
+
+        /* 图片悬浮效果 */
+        .activity-images img {
+            transition: all 0.3s ease;
+        }
+
+        .activity-images img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* 展开状态的动画 */
+        .activity-item.expanded {
+            transform: scale(1.02);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* 点击波纹效果 */
+        .activity-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .activity-item::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease-out, height 0.6s ease-out;
+        }
+
+        .activity-item:active::after {
+            width: 300px;
+            height: 300px;
+            opacity: 0;
+        }
+
+        /* 添加更多动画效果 */
+
+        /* 彩虹边框动画 */
+        @keyframes borderGlow {
+            0% { border-color: #ff6b6b; }
+            25% { border-color: #4ecdc4; }
+            50% { border-color: #45b7d1; }
+            75% { border-color: #96c93d; }
+            100% { border-color: #ff6b6b; }
+        }
+
+        /* 3D翻转效果 */
+        @keyframes flip {
+            0% { transform: perspective(400px) rotateY(0); }
+            100% { transform: perspective(400px) rotateY(360deg); }
+        }
+
+        /* 脉冲效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* 应用新动画 */
+        .activity-item {
+            border: 2px solid transparent;
+            animation: 
+                float 3s ease-in-out infinite,
+                borderGlow 6s linear infinite;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .activity-item h3 {
+            animation: 
+                titleGlow 2s infinite,
+                pulse 3s ease-in-out infinite;
+        }
+
+        /* 图片加载动画 */
+        .activity-images img {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 为每张图片设置不同的延迟 */
+        .activity-images img:nth-child(1) { animation-delay: 0.1s; }
+        .activity-images img:nth-child(2) { animation-delay: 0.3s; }
+        .activity-images img:nth-child(3) { animation-delay: 0.5s; }
+
+        /* 点击时的闪光效果 */
+        @keyframes shine {
+            0% {
+                background-position: -100% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        .activity-item:active {
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            background-size: 200% 100%;
+            animation: shine 0.8s linear;
+        }
+
+        /* 悬浮时的阴影动画 */
+        .activity-item:hover {
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.2),
+                0 0 20px rgba(135, 206, 235, 0.4),
+                0 0 30px rgba(135, 206, 235, 0.2);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        /* 展开时的过渡动画 */
+        .activity-item.expanded {
+            animation: expandBox 0.4s ease forwards;
+        }
+
+        @keyframes expandBox {
+            from {
+                transform: scale(1);
+            }
+            to {
+                transform: scale(1.02);
+                box-shadow: 
+                    0 10px 20px rgba(0,0,0,0.2),
+                    0 0 30px rgba(135, 206, 235, 0.6);
+            }
+        }
+
+        /* 标题3D效果 */
+        .activity-item h3 {
+            text-shadow: 
+                1px 1px 0 #1e4c9a,
+                2px 2px 0 rgba(30, 76, 154, 0.8),
+                3px 3px 5px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover h3 {
+            transform: translateZ(10px);
+        }
+
+        /* 新增更多动画效果 */
+
+        /* 霓虹灯效果 */
+        @keyframes neon {
+            0%, 100% {
+                text-shadow: 
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 15px #0073e6,
+                    0 0 20px #0073e6,
+                    0 0 25px #0073e6;
+            }
+            50% {
+                text-shadow: 
+                    0 0 2px #fff,
+                    0 0 5px #fff,
+                    0 0 10px #0073e6,
+                    0 0 15px #0073e6,
+                    0 0 20px #0073e6;
+            }
+        }
+
+        /* 水波纹效果 */
+        @keyframes ripple {
+            0% {
+                box-shadow: 
+                    0 0 0 0 rgba(135, 206, 235, 0.3),
+                    0 0 0 1px rgba(135, 206, 235, 0.3);
+            }
+            100% {
+                box-shadow: 
+                    0 0 0 10px rgba(135, 206, 235, 0),
+                    0 0 0 20px rgba(135, 206, 235, 0);
+            }
+        }
+
+        /* 悬浮旋转效果 */
+        @keyframes floatRotate {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(2deg);
+            }
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+        }
+
+        /* 应用新动画 */
+        .activity-item {
+            animation: 
+                floatRotate 6s ease-in-out infinite,
+                borderGlow 6s linear infinite,
+                ripple 1.5s infinite;
+        }
+
+        .activity-item h3 {
+            animation: neon 2s infinite;
+        }
+
+        /* 图片展开时的扇形展开效果 */
+        .activity-images img {
+            transform-origin: bottom;
+            opacity: 0;
+            animation: fanOut 0.8s ease forwards;
+        }
+
+        @keyframes fanOut {
+            from {
+                opacity: 0;
+                transform: rotate(-30deg) translateY(100px);
+            }
+            to {
+                opacity: 1;
+                transform: rotate(0) translateY(0);
+            }
+        }
+
+        /* 为每张图片设置不同的延迟和角度 */
+        .activity-images img:nth-child(1) { 
+            animation-delay: 0.1s; 
+            transform-origin: bottom left;
+        }
+        .activity-images img:nth-child(2) { 
+            animation-delay: 0.2s; 
+        }
+        .activity-images img:nth-child(3) { 
+            animation-delay: 0.3s; 
+            transform-origin: bottom right;
+        }
+
+        /* 点击时的爆炸效果 */
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .activity-item:active {
+            animation: explode 0.5s ease;
+        }
+
+        /* 悬浮时的光晕效果 */
+        .activity-item:hover {
+            box-shadow: 
+                0 5px 15px rgba(0,0,0,0.2),
+                0 0 20px rgba(135, 206, 235, 0.6),
+                0 0 40px rgba(135, 206, 235, 0.4),
+                0 0 60px rgba(135, 206, 235, 0.2);
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        /* 标题渐变动画 */
+        @keyframes gradientText {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .activity-item h3 {
+            background: linear-gradient(45deg, #1e4c9a, #00bfff, #1e4c9a);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s linear infinite;
+        }
+
+        /* 展开时的波纹扩散效果 */
+        .activity-item.expanded::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(circle, rgba(135, 206, 235, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: expandWave 1s ease-out forwards;
+        }
+
+        @keyframes expandWave {
+            to {
+                width: 200%;
+                height: 200%;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">返回首页</a>
+        <h1>校园文化</h1>
+    </header>
+
+    <div class="culture-section">
+        <div class="culture-card">
+            <h2>社团活动</h2>
+            <div class="activity-grid">
+                <div class="activity-item" onclick="toggleImages('student-union')">
+                    <h3>学生会</h3>
+                    <p>组织校园文化活动，服务全校学生</p>
+                    <div class="activity-images" id="student-union-images">
+                        <img src="img/学生会1.jpg" alt="学生会活动照片1">
+                        <img src="img/学生会2.jpg" alt="学生会活动照片2">
+                        <img src="img/学生会3.jpg" alt="学生会活动照片3">
+                    </div>
+                </div>
+                <div class="activity-item" onclick="toggleImages('art-group')">
+                    <h3>艺术团</h3>
+                    <p>舞蹈、音乐、戏剧等艺术表演</p>
+                    <div class="activity-images" id="art-group-images">
+                        <img src="img/艺术1.jpg" alt="艺术团表演1">
+                        <img src="img/艺术2.jpg" alt="艺术团表演2">
+                        <img src="img/艺术3.jpg" alt="艺术团表演3">
+                    </div>
+                </div>
+                <div class="activity-item" onclick="toggleImages('tech-club')">
+                    <h3>科技协会</h3>
+                    <p>开展科技创新活动，培养创新能力</p>
+                    <div class="activity-images" id="tech-club-images">
+                        <img src="img/科技1.jpg" alt="科技活动1">
+                        <img src="img/科技2.jpg" alt="科技活动2">
+                        <img src="img/科技3.jpg" alt="科技活动3">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="culture-card">
+            <h2>校园活动</h2>
+            <div class="activity-grid">
+                <div class="activity-item" onclick="toggleImages('welcome-party')">
+                    <h3>迎新晚会</h3>
+                    <p>欢迎新同学加入大家庭</p>
+                    <div class="activity-images" id="welcome-party-images">
+                        <img src="img/迎新1.jpg" alt="迎新晚会1">
+                        <img src="img/迎新2.jpg" alt="迎新晚会2">
+                        <img src="img/迎新3.jpg" alt="迎新晚会3">
+                    </div>
+                </div>
+                <div class="activity-item" onclick="toggleImages('culture-festival')">
+                    <h3>文化节</h3>
+                    <p>展示多彩校园文化生活</p>
+                    <div class="activity-images" id="culture-festival-images">
+                        <img src="img/文化节1.jpg" alt="文化节1">
+                        <img src="img/文化节2.webp" alt="文��节2">
+                        <img src="img/文化节3.png" alt="文化节3">
+                    </div>
+                </div>
+                <div class="activity-item" onclick="toggleImages('sports-festival')">
+                    <h3>运动会</h3>
+                    <p>促进身心健康发展</p>
+                    <div class="activity-images" id="sports-festival-images">
+                        <img src="img/运动节.jpg" alt="体育节1">
+                        <img src="img/运动节2.jpg" alt="体育节2">
+                        <img src="img/运动节3.jpg" alt="体育节3">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="imageModal">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="大图">
+        </div>
+        <button class="nav-button prev" onclick="changeImage(-1)">&#10094;</button>
+        <button class="nav-button next" onclick="changeImage(1)">&#10095;</button>
+    </div>
+
+    <script>
+    function toggleImages(id) {
+        const item = document.querySelector(`#${id}-images`).parentElement;
+        const images = document.querySelector(`#${id}-images`);
+        
+        if (images.style.display === 'grid') {
+            images.style.display = 'none';
+            item.classList.remove('expanded');
+        } else {
+            images.style.display = 'grid';
+            item.classList.add('expanded');
+        }
+    }
+
+    let currentImageSet = [];
+    let currentIndex = 0;
+
+    document.querySelectorAll('.activity-images img').forEach(img => {
+        img.style.cursor = 'pointer';
+        img.addEventListener('click', function() {
+            const parentContainer = this.closest('.activity-images');
+            currentImageSet = Array.from(parentContainer.querySelectorAll('img'));
+            currentIndex = currentImageSet.indexOf(this);
+            showModal(this.src);
+        });
+    });
+
+    function showModal(src) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        modalImg.src = src;
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    }
+
+    function changeImage(direction) {
+        currentIndex = (currentIndex + direction + currentImageSet.length) % currentImageSet.length;
+        const modalImg = document.getElementById('modalImage');
+        modalImg.src = currentImageSet[currentIndex].src;
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (!document.getElementById('imageModal').classList.contains('show')) return;
+        
+        if (e.key === 'ArrowLeft') {
+            changeImage(-1);
+        } else if (e.key === 'ArrowRight') {
+            changeImage(1);
+        } else if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+
+    document.getElementById('imageModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+    </script>
+</body>
+</html>

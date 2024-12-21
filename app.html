@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园风光 - 大庆师范学院</title>
+    <style>
+        :root {
+            --primary-color: #1e4c9a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #f5f5f5;
+            background: linear-gradient(-45deg, #3f51b5, #2196f3, #87ceeb, #4caf50);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50% }
+            50% { background-position: 100% 50% }
+            100% { background-position: 0% 50% }
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .gallery {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease backwards;
+            perspective: 1000px;
+            transform-style: preserve-3d;
+        }
+
+        .gallery-item:nth-child(1) { animation-delay: 0.1s; }
+        .gallery-item:nth-child(2) { animation-delay: 0.2s; }
+        .gallery-item:nth-child(3) { animation-delay: 0.3s; }
+        .gallery-item:nth-child(4) { animation-delay: 0.4s; }
+        .gallery-item:nth-child(5) { animation-delay: 0.5s; }
+        .gallery-item:nth-child(6) { animation-delay: 0.6s; }
+        .gallery-item:nth-child(7) { animation-delay: 0.7s; }
+        .gallery-item:nth-child(8) { animation-delay: 0.8s; }
+        .gallery-item:nth-child(9) { animation-delay: 0.9s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .gallery-item h3 {
+            padding: 1rem;
+            margin: 0;
+            text-align: center;
+            color: #333;
+            transition: color 0.3s ease;
+        }
+
+        .gallery-item:hover h3 {
+            color: var(--primary-color);
+        }
+
+        header h1 {
+            animation: typing 3.5s steps(30, end),
+                       titleGlow 2s infinite;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid white;
+            width: fit-content;
+            margin: 0 auto;
+            background: linear-gradient(
+                to right,
+                #ffff00,
+                #00ff00,
+                #0000ff,
+                #4b0082,
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: rainbow 5s linear infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(255,255,255,0.6);
+            }
+        }
+
+        @keyframes rainbow {
+            to { background-position: 200% center; }
+        }
+
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            transform: translateX(-5px);
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 1;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            animation: zoomIn 0.3s ease;
+        }
+
+        .modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 5px;
+            animation: modalZoomRotate 0.5s ease forwards;
+        }
+
+        .close-button {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: pulse 2s infinite;
+        }
+
+        .close-button:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .gallery-item img {
+            cursor: pointer;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-10px) rotate(1deg);
+            }
+        }
+
+        @keyframes modalZoomRotate {
+            from {
+                transform: scale(0.5) rotate(-5deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+            }
+        }
+
+        .nav-hint {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .modal.show .nav-hint {
+            opacity: 1;
+        }
+
+        .modal-content img {
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(255,255,255,0.3),
+                transparent
+            );
+            transform: skewX(-25deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 200%; }
+            100% { left: 200%; }
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+
+        .gallery-item:active::after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+
+        /* 使用更具体的选择器来确保覆盖其他样式 */
+        h2.gallery-title,
+        .gallery-container .gallery-title,
+        div > .gallery-title {
+            color: #ffffff !important;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            background-clip: unset !important;
+            animation: none !important;
+            background-image: none !important;
+            -webkit-text-fill-color: #ffffff !important;
+        }
+
+        /* 可以添加一个简单的下划线动画效果 */
+        .gallery-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #ffffff;
+            border-radius: 2px;
+            box-shadow: 0 2px 4px rgba(255,255,255,0.3);
+        }
+
+        /* 使用ID选择器来确保最高优先级 */
+        #campus-title {
+            color: #ffffff !important;
+            font-size: 2.5em;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            background: none !important;
+            -webkit-background-clip: unset !important;
+            background-clip: unset !important;
+            animation: none !important;
+            background-image: none !important;
+            -webkit-text-fill-color: #ffffff !important;
+            background-color: transparent !important;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">返回首页</a>
+        <h2 id="campus-title" class="gallery-title">校园风光</h2>
+    </header>
+
+    <div class="gallery">
+        <div class="gallery-item">
+            <img src="img/教学楼主楼.jpg" alt="教学楼">
+            <h3>教学楼</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/图书馆.jpg" alt="图书馆">
+            <h3>图书馆</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/宿舍楼.jpg" alt="宿舍楼">
+            <h3>宿舍楼</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/铁人.jpg" alt="铁人">
+            <h3>石油文化长廊</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/绿荫道路jpg.jpg" alt="校园绿化">
+            <h3>绿荫道路</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/校园一角.jpg" alt="校园一角">
+            <h3>校园一角</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/德才基石.jpg" alt="德才">
+            <h3>德才基石</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/师门之道.jpg" alt="师门">
+            <h3>师门之道</h3>
+        </div>
+        <div class="gallery-item">
+            <img src="img/艺术之韵.jpg" alt="艺术楼">
+            <h3>艺术之韵</h3>
+        </div>
+    </div>
+
+    <div class="modal" id="imageModal">
+        <span class="close-button" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <img id="modalImage" src="" alt="大图">
+        </div>
+        <div class="nav-hint">使用 ← → 键浏览图片</div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const galleryImages = document.querySelectorAll('.gallery-item img');
+
+        let currentImageIndex = 0;
+        const images = Array.from(galleryImages);
+
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('show')) return;
+            
+            if (e.key === 'ArrowLeft') {
+                currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+                updateModalImage();
+            } else if (e.key === 'ArrowRight') {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                updateModalImage();
+            }
+        });
+
+        function updateModalImage() {
+            modalImg.style.transform = 'scale(0.8)';
+            setTimeout(() => {
+                modalImg.src = images[currentImageIndex].src;
+                modalImg.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        galleryImages.forEach((img, index) => {
+            img.addEventListener('click', () => {
+                currentImageIndex = index;
+                modalImg.src = img.src;
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

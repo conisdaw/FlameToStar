@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大庆师范学院新生导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* index.html 的样式 */
+        :root {
+            --primary-color: #1e4c9a;
+            --secondary-color: #f5f5f5;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #87CEEB;  /* 从chat.html采用的背景色 */
+        }
+
+        /* index.html 的 header 样式 */
+        header {
+            background: linear-gradient(135deg, #1e4c9a, #2196f3);
+            color: white;
+            padding: 0.5rem 0;
+            position: relative;
+            overflow: hidden;
+            height: 60px;
+        }
+
+        /* 继续保留 index.html 的所有其他样式... */
+                /* 继续 index.html 的样式 */
+                .header-content {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0;
+            height: 100%;
+            padding-left: 50px;
+        }
+
+        /* 导航菜单样式 */
+        .nav-menu {
+            display: flex;
+            gap: 80px;
+            margin-left: 150px;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        /* chat.html 的聊天相关样式 */
+        #chat-container {
+            flex-grow: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-messages {
+            flex-grow: 1;
+            background: #E6F3FF;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-height: 400px;
+            overflow-y: auto;
+            margin-top: 0;
+        }
+
+        .message {
+            margin: 0.5rem 0;
+            padding: 0.4rem 0.6rem;
+            border-radius: 12px;
+            max-width: 45%;
+            position: relative;
+            word-wrap: break-word;
+            line-height: 1.2;
+        }
+
+        .user-message {
+            background: #FFD700;
+            color: #333;
+            margin-left: auto;
+            margin-right: 0.5rem;
+            border-bottom-right-radius: 4px;
+        }
+
+        .ai-message {
+            background: #FFF4D6;
+            color: #333;
+            margin-right: auto;
+            margin-left: 0.5rem;
+            border-bottom-left-radius: 4px;
+        }
+
+        /* 继续发送剩余样式... */
+            /* 聊天输入区域样式 */
+            #chat-input {
+           display: flex;
+           position: relative;
+           padding: 1.5rem;
+           background: #E6F3FF;
+           border-radius: 10px;
+           min-height: 120px;
+           width: 95%;
+           margin: 0 auto;
+           box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+       }
+        #user-input {
+           width: 100%;
+           padding: 1rem;
+           border: 1px solid #CCE4FF;
+           border-radius: 8px;
+           font-size: 16px;
+           resize: none;
+           min-height: 100px;
+           margin-bottom: 35px;
+           background: #F5FAFF;
+           color: #333;
+       }
+        #send-button {
+           position: absolute;
+           bottom: 25px;
+           right: 25px;
+           padding: 0.5rem 1.2rem;
+           background: var(--primary-color);
+           color: white;
+           border: none;
+           border-radius: 5px;
+           cursor: pointer;
+           transition: background-color 0.3s;
+       }
+        /* 消息头部和时间样式 */
+       .message-header {
+           font-size: 0.7rem;
+           margin-bottom: 0.1rem;
+           opacity: 0.8;
+           line-height: 1;
+       }
+        .message-content {
+           margin: 0;
+           padding: 0;
+           line-height: 1.2;
+       }
+        .message-time {
+           font-size: 0.6rem;
+           margin-top: 0.1rem;
+           line-height: 1;
+       }
+   </style>
+/head>
+body>
+   <header>
+       <div class="header-content">
+           <div class="logo">
+               <img src="img/校徽.png" alt="大庆师范学院校徽">
+           </div>
+           <h1>大庆师范学院</h1>
+           <div class="nav-menu">
+               <a href="app.html"><i class="fas fa-university"></i> 校园风光</a>
+               <a href="culture.html"><i class="fas fa-theater-masks"></i> 校园文化</a>
+               <a href="study.html"><i class="fas fa-book-reader"></i> 学习生活</a>
+               <a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> 师资队伍</a>
+           </div>
+       </div>
+   </header>

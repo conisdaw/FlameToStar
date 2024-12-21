@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>师资队伍 - 大庆师范学院</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1e4c9a;
+            --secondary-color: #f5f5f5;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: var(--secondary-color);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e4c9a, #2196f3);
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        .back-button {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .teachers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .teacher-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .teacher-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .teacher-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .teacher-info {
+            padding: 1.5rem;
+        }
+
+        .teacher-info h3 {
+            margin: 0 0 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .teacher-info p {
+            margin: 0.5rem 0;
+            color: #666;
+        }
+
+        .teacher-title {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .honor-section {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 20px;
+        }
+
+        .honor-section h2 {
+            color: #333;
+            border-bottom: 2px solid #a1c4fd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .honor-item {
+            margin-bottom: 20px;
+        }
+
+        .honor-item h3 {
+            color: #2c5282;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+            background: rgba(161, 196, 253, 0.1);
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+        .honor-item p {
+            color: #4a5568;
+            line-height: 1.8;
+            margin: 0;
+            padding: 10px 20px;
+        }
+
+        .honors-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .honor-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .honor-section h2 {
+            color: #2d3748;
+            font-size: 1.8em;
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #a1c4fd;
+        }
+
+        .honor-item {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(161, 196, 253, 0.05);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .honor-item:hover {
+            background: rgba(161, 196, 253, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .badge {
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            color: #2c5282;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 1em;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .name-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 10px;
+        }
+
+        .name {
+            background: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #4a5568;
+            font-size: 0.95em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .name:hover {
+            background: #f7fafc;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .honor-section {
+                padding: 20px;
+            }
+            
+            .name {
+                padding: 6px 12px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="back-button">返回首页</a>
+        <h1>师资队伍</h1>
+    </header>
+
+    <div class="honor-section">
+        <h2>省级以上人才称号</h2>
+        
+        <div class="honor-item">
+            <h3>1. 全国优秀教师</h3>
+            <p>李伟、郑万峰、张庆华</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>2. 黑龙江省高校教学名师</h3>
+            <p>王晖、冯展极、程利、张平、张晓梅、李唐海、马吉芬</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>3. 黑龙江省优秀中青年专家</h3>
+            <p>王福友</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>4. 省模范教师优秀教师</h3>
+            <p>韩振发、闵长泰、周键、杨良粱、贾立臣、李华、冯展极、程利、张晓梅、高清河、王福友</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>5. 省高校青年教学能手</h3>
+            <p>程利</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>6. 黑龙江省政府特殊津贴人员</h3>
+            <p>王福友、张平</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>7. 黑龙江省级人才</h3>
+            <p>D类人才：张平、刘洪胜</p>
+        </div>
+    </div>
+
+    <div class="honor-section">
+        <h2>省师德先进个人</h2>
+        
+        <div class="honor-item">
+            <h3>2024年</h3>
+            <p>鞠晶</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>2020年</h3>
+            <p>郭元阳</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>2019年</h3>
+            <p>林芳</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>2014年</h3>
+            <p>任国领、王宏伟、张秀华、马吉芬、董保臣、邓雨巍</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>2013年</h3>
+            <p>张晓梅、张平、董新杰、孙越、常贺、刘心蕊</p>
+        </div>
+
+        <div class="honor-item">
+            <h3>2012年</h3>
+            <p>冯展极、李枫、陈国成、尤凤丽、宋惠玲、张欣</p>
+        </div>
+    </div>
+
+    <div class="honors-container">
+        <div class="honor-section">
+            <h2>学科带头人体系</h2>
+            
+            <div class="honor-item">
+                <h3>
+                    <span class="badge">学科带头人</span>
+                </h3>
+                <div class="name-list">
+                    <span class="name">刘永皓</span>
+                    <span class="name">高清河</span>
+                    <span class="name">张平</span>
+                    <span class="name">张晓梅</span>
+                    <span class="name">王莉</span>
+                    <span class="name">马吉芬</span>
+                </div>
+            </div>
+
+            <div class="honor-item">
+                <h3>
+                    <span class="badge">学术带头人</span>
+                </h3>
+                <div class="name-list">
+                    <span class="name">刘开绪</span>
+                    <span class="name">张丽丽</span>
+                    <span class="name">钱慧娟</span>
+                    <span class="name">孙莉群</span>
+                    <span class="name">任国领</span>
+                    <span class="name">周丹</span>
+                    <span class="name">刘楠</span>
+                    <span class="name">孙伟仁</span>
+                    <span class="name">李锋</span>
+                    <span class="name">高有才</span>
+                    <span class="name">鞠晶</span>
+                    <span class="name">李嬿</span>
+                    <span class="name">孙明明</span>
+                    <span class="name">陈立勇</span>
+                    <span class="name">郭元阳</span>
+                    <span class="name">张文彬</span>
+                    <span class="name">原昊</span>
+                    <span class="name">章辉</span>
+                    <span class="name">付媛</span>
+                    <span class="name">杨庆玲</span>
+                    <span class="name">郭爽</span>
+                    <span class="name">张玲</span>
+                    <span class="name">孙大力</span>
+                    <span class="name">李慧</span>
+                </div>
+            </div>
+
+            <div class="honor-item">
+                <h3>
+                    <span class="badge">学术后备带头人</span>
+                </h3>
+                <div class="name-list">
+                    <span class="name">曹丰慧</span>
+                    <span class="name">李秀明</span>
+                    <span class="name">崔峰</span>
+                    <span class="name">薛韩</span>
+                    <span class="name">邓进军</span>
+                    <span class="name">董龙</span>
+                    <span class="name">曲丽娜</span>
+                    <span class="name">李媛媛</span>
+                    <span class="name">张凤岩</span>
+                    <span class="name">杨楠</span>
+                    <span class="name">乔兴</span>
+                    <span class="name">史东芳</span>
+                    <span class="name">滕达</span>
+                    <span class="name">张小川</span>
+                    <span class="name">任金凤</span>
+                    <span class="name">刘锐</span>
+                    <span class="name">贺志丽</span>
+                    <span class="name">李宏博</span>
+                    <span class="name">刘春</span>
+                    <span class="name">陆津</span>
+                    <span class="name">王崇娟</span>
+                    <span class="name">敖立琦</span>
+                    <span class="name">赵晓菊</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="teachers-grid">
+        <!-- 可以继续添加更多教师卡片 -->
+    </div>
+</body>
+</html>

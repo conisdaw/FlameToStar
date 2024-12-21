@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大庆师范学院新生导航</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1e4c9a;
+            --secondary-color: #f5f5f5;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: var(--secondary-color);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e4c9a, #2196f3);
+            color: white;
+            padding: 0.5rem 0;
+            position: relative;
+            overflow: hidden;
+            height: 60px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0;
+            height: 100%;
+            padding-left: 50px;
+        }
+
+        /* 添加导航菜单样式 */
+        .nav-menu {
+            display: flex;
+            gap: 80px;
+            margin-left: 150px;
+        }
+
+        .nav-menu a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 5px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 100% 100%;
+            }
+        }
+
+        .logo {
+            margin-right: 10px;
+        }
+
+        .logo img {
+            height: 50px;
+            margin: 0;
+            transition: transform 0.3s;
+            vertical-align: middle;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        header h1 {
+            font-family: "华文中宋", "方正姚体", "楷体", serif;
+            font-size: 2.8rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 6px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.6),
+            2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin: 0;
+            padding-left: 15px;
+            position: relative;
+
+            background: linear-gradient(120deg,
+            #ffffff 0%,
+            #e6e6e6 25%,
+            #ffffff 50%,
+            #e6e6e6 75%,
+            #ffffff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -100% 0;
+            }
+
+            100% {
+                background-position: 100% 0;
+            }
+        }
+
+        header h1:hover {
+            animation: none;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.7),
+            2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 0;
+            background: white;
+        }
+
+        .slideshow {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slide-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .slide-dot.active {
+            background: white;
+        }
+
+        .hero-section h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 2rem 0;
+        }
+
+        .hero-section a {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), #2196f3);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-section a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .school-info {
+            background: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 2rem auto;
+        }
+
+        .info-item {
+            padding: 1.5rem;
+            border-radius: 10px;
+            background: #f8f9fa;
+            transition: transform 0.3s;
+        }
+
+        .info-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .info-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        footer {
+            background: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .ai-sprite {
+            position: fixed;
+            right: 30px;
+            top: 30px;
+            width: 80px;
+            height: 80px;
+            cursor: move;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .ai-sprite img {
+            width: 80px;
+            height: 80px;
+            pointer-events: none;
+            border-radius: 50%;
+        }
+
+        .ai-sprite:hover {
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            transform: scale(1.05);
+        }
+
+        .ai-chat-bubble {
+            position: fixed;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            font-size: 14px;
+            max-width: 200px;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .ai-chat-bubble.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .chat-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 100px 0;
+            margin: 0;
+            width: 100%;
+            position: relative;
+        }
+
+        .chat-section::before {
+            content: none;
+        }
+
+        .chat-section-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            padding: 60px 0;
+        }
+
+        .chat-section a {
+            background: linear-gradient(45deg, var(--primary-color), #2196f3);
+            color: white;
+            padding: 20px 80px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+
+        .chat-section a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-section-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .user-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 200px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-group select {
+            background: white;
+        }
+
+        .ai-title {
+            background: linear-gradient(45deg, var(--primary-color), #2196f3);
+            padding: 15px 40px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .ai-title h2 {
+            color: white;
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+
+        .ai-features {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .ai-features h2 {
+            text-align: center;
+            color: var(--primary-color);
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--primary-color), #2196f3);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-guide {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .ai-guide h3 {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin: 10px 0;
+        }
+
+        .start-chat {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--primary-color), #2196f3);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .start-chat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e4c9a, #2196f3);
+            color: white;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 60px;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;  /* 控制Logo和标题之间的间距 */
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;  /* 确保标题的颜色与Logo一致 */
+        }
+
+        .logo-img {
+            height: 40px;  /* 默认Logo高度 */
+            transition: transform 0.3s ease;  /* 动画效果，鼠标悬停时略微放大 */
+        }
+
+        .logo-img:hover {
+            transform: scale(1.1);  /* 鼠标悬停时放大Logo */
+        }
+
+        .site-title {
+            font-size: 1.3rem;  /* 默认字体大小 */
+            margin-left: 10px;  /* 与Logo之间的间距 */
+            font-weight: bold;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex: 1;
+        }
+
+        nav a {
+            color: white;
+            font-size: 1.1rem;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background 0.3s ease, transform 0.3s;
+        }
+
+        nav a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .logo-container {
+                flex-direction: column;
+                align-items: center;  /* Logo和标题在小屏幕上居中显示 */
+                gap: 5px;  /* 调整Logo和标题之间的间距 */
+            }
+
+            .logo-img {
+                height: 30px;  /* 小屏幕上Logo的尺寸 */
+            }
+
+            .site-title {
+                font-size: 1.1rem;  /* 小屏幕上标题字体稍微小一点 */
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="header-content">
+        <div class="logo-container">
+            <a href="https://www.dqsy.net/" class="logo-link">
+                <img src="img/校徽.png" alt="大庆师范学院校徽" class="logo-img">
+                <h1 class="site-title">大庆师范学院</h1>
+            </a>
+        </div>
+
+        </a>
+        <div class="nav-menu">
+            <a href="app.html"><i class="fas fa-university"></i> 校园风光</a>
+            <a href="culture.html"><i class="fas fa-theater-masks"></i> 校园文化</a>
+            <a href="study.html"><i class="fas fa-book-reader"></i> 学习生活</a>
+            <a href="teachers.html"><i class="fas fa-chalkboard-teacher"></i> 师资队伍</a>
+        </div>
+    </div>
+</header>
+<main>
+    <div class="hero-section">
+        <div class="slideshow">
+            <div class="slide active">
+                <img src="img/2.png" alt="校园风光1">
+            </div>
+            <div class="slide">
+
+                <img src="img/微信图片1_20241219102840.jpg" alt="校园风光2">
+            </div>
+            <div class="slide">
+                <img src="img/微信图片3_20241219102900.jpg" alt="校园风光3">
+            </div>
+            <div class="slide-controls">
+                <div class="slide-dot active"></div>
+                <div class="slide-dot"></div>
+                <div class="slide-dot"></div>
+            </div>
+        </div>
+        <div class="ai-features">
+            <h2>遇见青松AI，探索智慧校园</h2>
+            <div class="ai-guide">
+                <h3>青松AI — 你的校园指南</h3>
+                <a href="chat.html" class="start-chat">开始对话</a>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <p>© 2024 大庆师范学院 版权所有</p>
+</footer>
+
+<div class="ai-sprite" id="aiSprite">
+    <img src="img/小精灵.jpg" alt="AI助手">
+</div>
+<div class="ai-chat-bubble" id="aiChatBubble">
+    你好！我是青松AI助手，有什么可以帮你的吗？
+</div>
+
+<script>
+    // 轮播图功能
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slide-dot');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        slides[index].classList.add('active');
+        dots[index].classList.add('active');
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    // 点击小点切图片
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            currentSlide = index;
+            showSlide(currentSlide);
+        });
+    });
+    // 自动播放
+    setInterval(nextSlide, 5000);
+
+    // 添加AI小精灵交互脚本
+    const aiSprite = document.getElementById('aiSprite');
+    const aiChatBubble = document.getElementById('aiChatBubble');
+
+    let isDragging = false;
+    let startX, startY;
+    let hasMoved = false;
+
+    function onMouseDown(e) {
+        isDragging = true;
+        hasMoved = false;
+        startX = e.clientX - parseInt(getComputedStyle(aiSprite).left);
+        startY = e.clientY - parseInt(getComputedStyle(aiSprite).top);
+        aiSprite.style.cursor = 'grabbing';
+    }
+
+    function updateBubblePosition() {
+        const spriteRect = aiSprite.getBoundingClientRect();
+        aiChatBubble.style.top = `${spriteRect.top + 10}px`;
+        aiChatBubble.style.right = `${window.innerWidth - spriteRect.left + 20}px`;
+    }
+
+    function onMouseMove(e) {
+        if (!isDragging) return;
+
+        hasMoved = true;
+
+        const x = e.clientX - startX;
+        const y = e.clientY - startY;
+
+        const maxX = window.innerWidth - aiSprite.offsetWidth;
+        const maxY = window.innerHeight - aiSprite.offsetHeight;
+
+        const boundedX = Math.min(Math.max(0, x), maxX);
+        const boundedY = Math.min(Math.max(0, y), maxY);
+
+        aiSprite.style.left = boundedX + 'px';
+        aiSprite.style.top = boundedY + 'px';
+
+        updateBubblePosition();
+    }
+
+    function onMouseUp(e) {
+        if (isDragging) {
+            if (!hasMoved) {
+                window.location.href = 'chat.html';
+            }
+            isDragging = false;
+            aiSprite.style.cursor = 'move';
+        }
+    }
+
+    aiSprite.addEventListener('mousedown', onMouseDown);
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+
+    // 触摸设备支持
+    aiSprite.addEventListener('touchstart', (e) => {
+        const touch = e.touches[0];
+        isDragging = true;
+        hasMoved = false;
+        startX = touch.clientX - parseInt(getComputedStyle(aiSprite).left);
+        startY = touch.clientY - parseInt(getComputedStyle(aiSprite).top);
+    });
+
+    document.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+
+        hasMoved = true;
+        e.preventDefault();
+
+        const touch = e.touches[0];
+        const x = touch.clientX - startX;
+        const y = touch.clientY - startY;
+
+        const maxX = window.innerWidth - aiSprite.offsetWidth;
+        const maxY = window.innerHeight - aiSprite.offsetHeight;
+
+        const boundedX = Math.min(Math.max(0, x), maxX);
+        const boundedY = Math.min(Math.max(0, y), maxY);
+
+        aiSprite.style.left = boundedX + 'px';
+        aiSprite.style.top = boundedY + 'px';
+    }, {passive: false});
+
+    document.addEventListener('touchend', () => {
+        if (isDragging) {
+            if (!hasMoved) {
+                window.location.href = 'chat.html';
+            }
+            isDragging = false;
+        }
+    });
+
+    // 鼠标悬停事件
+    aiSprite.addEventListener('mouseenter', () => {
+        updateBubblePosition();
+        aiChatBubble.classList.add('show');
+    });
+
+    aiSprite.addEventListener('mouseleave', () => {
+        aiChatBubble.classList.remove('show');
+    });
+
+    // 在现有的AI小精灵脚本中添加随机欢迎语
+    const welcomeMessages = [
+        "你好！我是青松AI助手，需要了解大庆师范学院信息吗？",
+        "Hi！初来乍到需要帮助吗？点击我可以问任何问题哦！",
+        "欢迎来到大庆师范学院！我可以帮你快速了解校园生活～",
+        "有什么想问的吗？校园生活、学习指南都可以问我哦！"
+    ];
+
+    // 随机显示欢迎语
+    function updateWelcomeMessage() {
+        const randomMessage = welcomeMessages[Math.floor(Math.random() * welcomeMessages.length)];
+        document.getElementById('aiChatBubble').textContent = randomMessage;
+    }
+
+    // 在鼠标悬停时更新消息
+    aiSprite.addEventListener('mouseenter', () => {
+        updateWelcomeMessage();
+        updateBubblePosition();
+        aiChatBubble.classList.add('show');
+    });
+</script>
+</body>
+
+</html>
